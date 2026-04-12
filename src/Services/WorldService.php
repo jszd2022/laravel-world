@@ -17,15 +17,15 @@ class WorldService {
         return $this;
     }
 
-    public function countries(array $args): BaseAction {
+    public function countries(array $args = []): BaseAction {
         return $this->executeAction(Countries::class, $args);
     }
 
-    public function states(array $args): BaseAction {
+    public function states(array $args = []): BaseAction {
         return $this->executeAction(States::class, $args);
     }
 
-    public function cities(array $args): BaseAction {
+    public function cities(array $args = []): BaseAction {
         return $this->executeAction(Cities::class, $args);
     }
 
