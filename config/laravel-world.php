@@ -19,7 +19,7 @@ return [
     */
     'routes' => [
         'enabled' => true,
-        'prefix' => null,
+        'prefix' => 'api',
     ],
 
     /*
