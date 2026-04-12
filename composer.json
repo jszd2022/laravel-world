@@ -12,13 +12,13 @@
     "type": "laravel-package",
     "authors": [
         {
-            "name": "J.Sz. Dávid",
+            "name": "J. Sz. David",
             "email": "99481700+jszd2022@users.noreply.github.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=7.4"
+        "php": ">=8.0"
     },
     "require-dev": {
         "orchestra/testbench": ">=v4.0.0",
@@ -32,7 +32,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Nnjeim\\World\\Tests\\": "tests/"
+            "JSzD\\World\\Tests\\": "tests/"
         }
     },
     "scripts": {
