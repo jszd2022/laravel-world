@@ -22,11 +22,9 @@ abstract class BaseRequest extends FormRequest {
      * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array {
-
         $rules = [];
 
-        $rules['fields'] = 'sometimes|array';
-        $rules['fields.*'] = ['sometimes', 'string', Rule::in($this->availableFields)];
+        $rules['fields'] = 'sometimes|string';
 
         $rules['filters'] = 'sometimes|array';
         foreach ($this->availableFields as $field) {
