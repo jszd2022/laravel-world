@@ -1,0 +1,38 @@
+<?php
+
+namespace JSzD\World\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+/**
+ * @property int $id
+ * @property string $name
+ * @property int $country_id
+ * @property string $country_code
+ * @property string $state_code
+ */
+class State extends Model {
+    public    $timestamps = false;
+    protected $guarded    = [];
+
+    protected function casts(): array {
+        return [
+            'id'         => 'integer',
+            'country_id' => 'integer',
+        ];
+    }
+
+    public function getTable() {
+        return config('laravel-world.migrations.states.table_name', parent::getTable());
+    }
+    
+    public function country(): BelongsTo {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+    
+    public function cities(): HasMany {
+        return $this->hasMany(City::class, 'state_id');
+    }
+}
