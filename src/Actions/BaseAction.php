@@ -6,7 +6,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use JSzD\World\Models\City;
 
 abstract class BaseAction {
     protected string  $model;
@@ -63,13 +62,15 @@ abstract class BaseAction {
         if (empty($fields)) {
             $query->select($this->defaultFields);
         } else {
-            $query->select($fields);
+            $query->select(array_intersect($fields, $this->availableFields));
         }
 
         foreach ($filters as $field => $value) {
-            $query->where($field, $value);
+            if (in_array($field, $this->availableFields)) {
+                $query->where($field, $value);
+            }
         }
-        $query->when($search, fn($query) => $query->whereLike('name', "%{$search}%"));
+        $query->when($search, fn($query) => $query->where('name', 'like', "%{$search}%"));
         return $query->get();
     }
 
@@ -101,16 +102,24 @@ abstract class BaseAction {
      */
     private function genCacheKey(mixed $fields, mixed $filters, mixed $search): string {
         $key = "laravel-world.$this->model";
-        foreach ($fields as $field) {
-            $key .= ".$field";
+
+        if (!empty($fields)) {
+            sort($fields);
+            $key .= ".fields:" . implode(',', $fields);
         }
-        foreach ($filters as $field => $value) {
-            $key .= ".$field:$value";
+
+        if (!empty($filters)) {
+            ksort($filters);
+            foreach ($filters as $field => $value) {
+                $key .= ".filter:$field:$value";
+            }
         }
+
         if ($search) {
-            $key .= ".$search";
+            $key .= ".search:$search";
         }
-        return $key;
+
+        return md5($key);
     }
 
     /**
