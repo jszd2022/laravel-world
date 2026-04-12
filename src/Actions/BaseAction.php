@@ -29,7 +29,7 @@ abstract class BaseAction {
             'search'  => null,
         ];
 
-        $cache = $args['cache'] ?? false;
+        $cache = $args['withCaching'] ?? false;
 
         $this->validate($fields, $filters);
 
@@ -75,11 +75,15 @@ abstract class BaseAction {
     }
 
     /**
-     * @param array $fields
+     * @param mixed $fields
      * @param array $filters
      * @return void
      */
-    protected function validate(array &$fields, array &$filters) {
+    protected function validate(mixed &$fields, array &$filters) {
+
+        if (is_string($fields)) {
+            $fields = explode(',', $fields);
+        }
 
         $fields = Validator::make($fields, [
             '*' => ['sometimes', 'string', Rule::in($this->availableFields)]
