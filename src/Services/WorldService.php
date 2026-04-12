@@ -2,7 +2,9 @@
 
 namespace JSzD\World\Services;
 
+use JSzD\World\Actions\Cities;
 use JSzD\World\Actions\Countries;
+use JSzD\World\Actions\States;
 use JSzD\World\Contracts\WorldAction;
 
 class WorldService {
@@ -20,11 +22,11 @@ class WorldService {
     }
 
     public function states(array $args): WorldAction {
-        return $this->executeAction(Countries::class, $args);
+        return $this->executeAction(States::class, $args);
     }
 
     public function cities(array $args): WorldAction {
-        return $this->executeAction(Countries::class, $args);
+        return $this->executeAction(Cities::class, $args);
     }
 
     protected function executeAction(string $action, array $args) {
