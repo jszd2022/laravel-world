@@ -18,6 +18,6 @@ return new class extends Migration {
     }
 
     public function down(): void {
-        Schema::dropIfExists('');
+        Schema::dropIfExists(config('laravel-world.migrations.states.table_name'));
     }
 };
