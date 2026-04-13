@@ -12,7 +12,6 @@ return new class extends Migration {
             $table->string('iso2', 2);
             $table->string('name');
             $table->string('phone_code', 5);
-            $table->tinyInteger('status')->default(1);
         });
     }
 
